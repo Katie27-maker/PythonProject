@@ -16,9 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <title>Record your favorite photos</title>
 
@@ -36,23 +34,39 @@
             width: 900px;
         }
 
-        .comment {
-            font-weight: bold;
-            color: blue;
+        header {
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 150px;
+            padding: 1rem;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg');
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 2;
         }
 
-        .posting-box {
-            margin: 10px auto 30px auto;
-            width: 500px;
-
-            border: 3px solid black;
-            border-radius: 5px;
-
-            padding: 25px;
-
-            display: none;
+        main {
+            padding: 1rem;
+            height: 100%;
+            margin-top: 150px;
+            z-index: 1;
         }
+
     </style>
+
     <script>
         $(document).ready(function () {
             listing();
@@ -66,7 +80,7 @@ function listing() {
                 data: {},
                 success: function (response) {
                     let rows = response['movies']
-                    for(let i = 0; i < rows.length; i++) {
+                    for(let i = 1; i < rows.length; i++) {
                         if(rows[i]['star']!=null){
                         let image = rows[i]['image']
                         let title = rows[i]['title']
@@ -76,18 +90,16 @@ function listing() {
 
                         let star_image = '🌸'.repeat(star)
 
-                        let temp_html = `<div class="col">
-                                            <div class="card h-100">
-                                                <img src="${image}"
-                                                     class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${title}</h5>
-                                                    <!--?<p class="card-text">${desc}</p>-->
-                                                    <p>${star_image}</p>
-                                                    <p class="mycomment">${comment}</p>
-                                                </div>
-                                            </div>
-                                        </div>`
+                        let temp_html = `<div class="col col-md-4 mb-3">
+                                              <div class="card h-100">
+                                                    <img class="card-img-top" alt="..." src="${image}">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">${title}</h6>
+                                                        <p>${star_image}</p>
+                                                        <p class="mycomment">${comment}</p>
+                                                    </div>
+                                              </div>
+                                          </div>`
 
                         $('#cards-box').append(temp_html)
                     }
@@ -126,37 +138,55 @@ function posting() {
 <body>
 
 </body>
-<div class="mytitle">
-    <h1>Record your favorite photos</h1>
-    <button onclick="open_box()">사진 기록하기</button>
-</div>
-<div class="mypost" id="post-box">
-    <div class="form-floating mb-3">
-        <input id="url" type="email" class="form-control" placeholder="사진 영화 url을 입력하세요.">
-        <label>URL</label>
-    </div>
+
+<!-- Button trigger modal -->
+<header class="Button_trigger_modal">
+    <h1>What is the most popular picture?</h1>
+    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      사진 기록하기
+    </button>
+</header>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-5" id="exampleModalLabel">사진의 링크 주소를 복붙하세요!</h3>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">URL</label>
+            <input id="url" type="email" class="form-control" placeholder="사진 영화 url을 입력하세요.">
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">별점</label>
+            <select class="form-select" id="star">
+                <option selected>-- Chois --</option>
+                <option value="1">🌸</option>
+                <option value="2">🌸🌸</option>
+                <option value="3">🌸🌸🌸</option>
+                <option value="4">🌸🌸🌸🌸</option>
+                <option value="5">🌸🌸🌸🌸🌸</option>
+            </select>
+        </div>
+
     <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
-        <select class="form-select" id="star">
-            <option selected>-- Chois --</option>
-            <option value="1">🌸</option>
-            <option value="2">🌸🌸</option>
-            <option value="3">🌸🌸🌸</option>
-            <option value="4">🌸🌸🌸🌸</option>
-            <option value="5">🌸🌸🌸🌸🌸</option>
-        </select>
-    </div>
-    <div class="form-floating">
+        <label class="input-group-text" for="inputGroupSelect01">comment</label>
         <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
-        <label for="floatingTextarea2">코멘트</label>
     </div>
-    <div class="mybtns">
-        <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
-        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+      </div>
+      <div class="modal-footer">
+          <button onclick="posting()" type="button" class="btn btn-primary">기록하기</button>
+          <button onclick="close_box()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
     </div>
+  </div>
 </div>
-<div class="mycards">
-    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+
+<main class="mycards">
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
         <div class="col">
             <div class="card h-100">
                 <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
@@ -206,5 +236,6 @@ function posting() {
             </div>
         </div>
     </div>
-</div>
+</main>
+
 </html>
