@@ -3,7 +3,7 @@
 <a href="http://share-bk.shop:3000/">프로젝트 링크!</a>
 
 
-url만 있으면 어떤 이미지든 기록이 가능하다. 사이트 한 곳에서만 저장하기 힘든 단점을 개선함.
+사진 링크 URL과 별점, 멘트를 입력하면 기록할 수 있는 나만의 사진 앱!
 
 <h5>에디터 : 파이참</h5>
 <h5>사용 언어 : python, js, jQuery</h5>
@@ -14,3 +14,5 @@ url만 있으면 어떤 이미지든 기록이 가능하다. 사이트 한 곳�
 -----------------------------------------------------------------------
 
 https://github.com/Katie27-maker/PythonProject/assets/59760987/25ca4d7b-9aea-433b-bd1f-6a69c24e0e69
+
+https://github.com/Katie27-maker/PythonProject/assets/59760987/a72273be-85bd-4423-a523-a9a73b605a54
